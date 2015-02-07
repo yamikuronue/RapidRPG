@@ -1,20 +1,49 @@
 <?php
-class Pages extends CI_Controller {
+class Pages extends Base_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('Page_model');
+	}
+	
 	public function view($page = 'home')
 	{
-		if ( ! file_exists(APPPATH.'/views/pages/'.$page.'.php'))
+		$data['page'] = $this->Page_model->get_page($page);
+		
+		if (empty($data['page']))
 		{
-			// Whoops, we don't have a page for that!
 			show_404();
 		}
 		
-		$data['title'] = ucfirst($page); // Capitalize the first letter
 		
-		$this->load->view('templates/header', $data);
-		$this->load->view('pages/'.$page, $data);
+		$data['title'] = ucfirst($page); // Capitalize the first letter
+
+		$this->load->view('templates/header', $this->headerData);
+		$this->load->view('pages/view', $data);
 		$this->load->view('templates/footer', $data);
 	}
 	
+	public function create()
+	{
+		$this->load->helper('form');
+		$this->load->library('form_validation');		
+		
+		$this->form_validation->set_rules('name', 'Page Name', 'required|max_length[20]');
+		$this->form_validation->set_rules('content', 'Page Content', 'required');
+		
+		if ($this->form_validation->run() === FALSE)
+		{
+			$this->load->view('templates/header', $this->headerData);
+			$this->load->view('pages/create');
+			$this->load->view('templates/footer');
+		
+		}
+		else
+		{
+			$this->Page_model->add_page();
+			redirect('/chars/', 'refresh');
+		}
+	}
 	
 }

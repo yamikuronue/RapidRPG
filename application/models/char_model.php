@@ -25,7 +25,13 @@ class Char_model extends CI_Model {
 		$data = array(
 				'fName' => $this->input->post('fName'),
 				'lName' => $this->input->post('lName'),
-				'description' => $this->input->post('description')
+				'gender' => $this->input->post('gender'),
+				'bday' => $this->input->post('bday'),
+				'description' => $this->input->post('description'),
+				'personality' => $this->input->post('personality'),
+				'history' => $this->input->post('history'),
+				'notes' => $this->input->post('notes'),
+				
 		);
 	
 		return $this->db->insert('chars', $data);

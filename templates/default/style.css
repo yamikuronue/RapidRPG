@@ -1,7 +1,17 @@
 @CHARSET "ISO-8859-1";
 
 body {
+	padding-top: 70px;
 	background-color: #7D9C9F;
+}
+
+.navbar-inverse {
+	background-color: #B1B1B1;
+}
+
+.navbar-inverse .navbar-nav>li>a,
+.navbar-inverse .navbar-brand {
+	color: #AD235E;
 }
 
 h2 {

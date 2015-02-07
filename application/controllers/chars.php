@@ -1,5 +1,5 @@
 <?php
-class Chars extends CI_Controller {
+class Chars extends Base_Controller {
 
 	public function __construct()
 	{
@@ -11,7 +11,7 @@ class Chars extends CI_Controller {
 	{
 		$data['chars'] = $this->Char_model->get_chars();
 		
-		$this->load->view('templates/header', $data);
+		$this->load->view('templates/header', $this->headerData);
 		$this->load->view('chars/index', $data);
 		$this->load->view('templates/footer');
 	}
@@ -26,7 +26,7 @@ class Chars extends CI_Controller {
 		}
 		$data['title'] = "Character: " . $data['char']['fName'] .' ' . $data['char']['lName'];
 		
-		$this->load->view('templates/header', $data);
+		$this->load->view('templates/header', $this->headerData);
 		$this->load->view('chars/view', $data);
 		$this->load->view('templates/footer');
 	}
@@ -50,7 +50,7 @@ class Chars extends CI_Controller {
 	
 		if ($this->form_validation->run() === FALSE)
 		{
-			$this->load->view('templates/header', $data);
+			$this->load->view('templates/header', $this->headerData);
 			$this->load->view('chars/create');
 			$this->load->view('templates/footer');
 	
