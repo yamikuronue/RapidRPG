@@ -2,3 +2,4 @@
 cd /var/www/public/application/dbsetup
 mysql --user=root --password=root < dbUserCreate.sql
 mysql --user=rapidrpg --password=rapidrpg < dbCreate.sql
+mysql --user=rapidrpg --password=rapidrpg --database=rapidrpgtest < loadSampleData.sql

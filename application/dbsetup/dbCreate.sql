@@ -31,17 +31,21 @@ DROP TABLE IF EXISTS `chars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `chars` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `owner` int(8) NOT NULL,
   `fName` varchar(128) NOT NULL,
   `lName` varchar(128) NOT NULL,
-  `description` text NOT NULL,
+  `gender` enum('male','female','other') DEFAULT NULL,
+  `bday` date DEFAULT NULL,
+  `description` mediumtext NOT NULL,
+  `personality` mediumtext NOT NULL,
+  `history` mediumtext NOT NULL,
+  `notes` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `chars`
---
+
 
 LOCK TABLES `chars` WRITE;
 /*!40000 ALTER TABLE `chars` DISABLE KEYS */;

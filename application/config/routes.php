@@ -37,12 +37,12 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$route['chars/create'] = 'chars/create';
+$route['chars/(:any)'] = 'chars/view/$1';
+$route['chars'] = 'chars';
 
 $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1';
-
-$route['chars/(:any)'] = 'chars/view/$1';
-$route['chars'] = 'chars';
 
 
 /* End of file routes.php */

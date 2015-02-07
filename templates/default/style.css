@@ -1,0 +1,23 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	background-color: #7D9C9F;
+}
+
+h2 {
+	color: #AD235E;
+}
+
+.sitename {
+	font-family: 'Anton', sans-serif;
+	color: #AD235E;
+}
+
+.label-shortfield, .label-longfield {
+	font-weight: bold;
+}
+
+#maindiv {
+	background-color: #DFEFF0;
+	padding: 20px;
+}
