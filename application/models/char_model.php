@@ -10,19 +10,20 @@ class Char_model extends CI_Model {
 	{
 		if ($id === FALSE)
 		{
-			$query = $this->db->get('chars');
+			$query = $this->db->select('chars.*, users.username AS ownerName')->join('users', 'chars.owner = users.userID')->get('chars');
 			return $query->result_array();
 		}
 	
-		$query = $this->db->get_where('chars', array('id' => $id));
+		$query = $this->db->select('chars.*, users.username AS ownerName')->join('users', 'chars.owner = users.userID')->get_where('chars', array('id' => $id));
 		return $query->row_array();
 	}
 	
-	public function add_char()
+	public function add_char($owner)
 	{
 		$this->load->helper('url');
 		
 		$data = array(
+				'owner' => $owner,
 				'fName' => $this->input->post('fName'),
 				'lName' => $this->input->post('lName'),
 				'gender' => $this->input->post('gender'),

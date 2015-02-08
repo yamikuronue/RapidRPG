@@ -21,11 +21,21 @@ $template = "default"
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
           <?php foreach ($menu as $item) {
-          	echo "<li><a href=" .$item["slug"] . ">" .ucfirst($item["name"]) ."</a></li>";
+          	echo "<li><a href=" .site_url($item["slug"]) . ">" .ucfirst($item["name"]) ."</a></li>";
           }
           
           ?>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+          <?php          
+          $userID = $this->session->userdata('userID');
+			if (empty($userID)) { 
+				echo '<li><a href="'.site_url("login").'">Login</a></li>';
+			} else {
+				echo '<li><a href="'.site_url("logout").'">Logout</a></li>';
+			}?>
+		   </ul>
+
         </div><!--/.nav-collapse -->
       </div>
     </nav>

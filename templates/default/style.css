@@ -14,6 +14,10 @@ body {
 	color: #AD235E;
 }
 
+.error {
+	color: red;
+}
+
 h2 {
 	color: #AD235E;
 }

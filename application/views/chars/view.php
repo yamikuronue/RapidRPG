@@ -5,7 +5,7 @@ echo '<h2>'.$char['fName']." ". $char['lName'].'</h2>';
 ?>
 
 <p>
-	<span class="label-shortfield">Played by:</span> <?php echo $char['owner']?><br/>
+	<span class="label-shortfield">Played by:</span> <?php echo $char['ownerName']?><br/>
 	<span class="label-shortfield">Gender:</span> <?php echo $char['gender']?><br/>
 	<span class="label-shortfield">Birthday:</span> <?php echo $char['bday']?><br/>
 </p>

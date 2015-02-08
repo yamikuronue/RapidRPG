@@ -33,6 +33,8 @@ class Chars extends Base_Controller {
 	
 	public function create()
 	{
+		$this->requiresLoggedIn();
+		
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 	
@@ -57,8 +59,8 @@ class Chars extends Base_Controller {
 		}
 		else
 		{
-			$this->Char_model->add_char();
-			redirect('chars/', 'refresh');;
+			$this->Char_model->add_char($this->session->userdata('userID'));
+			redirect('chars/', 'refresh');
 		}
 	}
 	
