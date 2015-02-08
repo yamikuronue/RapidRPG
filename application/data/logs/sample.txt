@@ -1,0 +1,4 @@
+<user1> This is a log!
+<user2> Line 2
+
+<user5> Line 4

@@ -41,6 +41,10 @@ $route['chars/create'] = 'chars/create';
 $route['chars/(:any)'] = 'chars/view/$1';
 $route['chars'] = 'chars';
 
+$route['logs/(:any)'] = 'logs/view/$1';
+$route['logs'] = 'logs';
+
+
 $route['login'] = 'login';
 $route['logout'] = 'login/logout';
 $route['login/validate'] = 'login/validate';

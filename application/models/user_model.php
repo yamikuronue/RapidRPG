@@ -14,7 +14,7 @@ class User_model extends CI_Model {
 			return $query->result_array();
 		}
 
-		$query = $this->db->get_where('users', array('id' => $id));
+		$query = $this->db->get_where('users', array('userID' => $id));
 		return $query->row_array();
 	}
 	
@@ -33,26 +33,29 @@ class User_model extends CI_Model {
 	}
 
 	public function user_is_admin($id) {
-		$query = $this->db->select('admin')->get_where('users', array('id' => $id));
-		$row = $query->row_array();
+		$query = $this->db->select('admin')->get_where('users', array('userID' => $id));
+		$row = $query->row();
+		if ($query->num_rows() == 0) return false;
 		return $row->admin == 'TRUE';
 	}
 	
 	public function user_can_see_mature($id) {
-		$query = $this->db->select('mature')->get_where('users', array('id' => $id));
-		$row = $query->row_array();
+		$query = $this->db->select('mature')->get_where('users', array('userID' => $id));
+		$row = $query->row();
+		if ($query->num_rows() == 0) return false;
 		return $row->mature == 'TRUE';
 	}
 	
 	public function user_can_tag($id) {
-		$query = $this->db->select('tagger')->get_where('users', array('id' => $id));
-		$row = $query->row_array();
+		$query = $this->db->select('tagger')->get_where('users', array('userID' => $id));
+		$row = $query->row();
 		return $row->tagger == 'TRUE';
 	}
 	
 	public function user_wants_email($id) {
-		$query = $this->db->select('receiveMail')->get_where('users', array('id' => $id));
-		$row = $query->row_array();
+		$query = $this->db->select('receiveMail')->get_where('users', array('userID' => $id));
+		$row = $query->row();
+		if ($query->num_rows() == 0) return false;
 		return $row->receiveMail == 'TRUE';
 	}
 }

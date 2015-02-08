@@ -16,7 +16,7 @@ $template = "default"
 	<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">RapidRPG</a>
+          <a class="navbar-brand" href="/">RapidRPG</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -28,11 +28,10 @@ $template = "default"
           </ul>
           <ul class="nav navbar-nav navbar-right">
           <?php          
-          $userID = $this->session->userdata('userID');
-			if (empty($userID)) { 
-				echo '<li><a href="'.site_url("login").'">Login</a></li>';
-			} else {
+			if ($loggedin) { 
 				echo '<li><a href="'.site_url("logout").'">Logout</a></li>';
+			} else {
+				echo '<li><a href="'.site_url("login").'">Login</a></li>';
 			}?>
 		   </ul>
 

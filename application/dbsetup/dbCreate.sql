@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `users`;
   `admin` enum('FALSE','TRUE') NOT NULL,
   `receiveMail` enum('FALSE','TRUE') NOT NULL,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2272 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 --
@@ -48,6 +48,38 @@ ALTER TABLE chars
     ADD FOREIGN KEY
     (owner)
     REFERENCES users (userID);
+
+--
+-- Log tables
+--
+
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE `logs` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(100) DEFAULT NULL,
+  `summary` mediumtext,
+  `title` varchar(100) DEFAULT NULL,
+  `mature` enum('FALSE','TRUE') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `logchars`;
+CREATE TABLE `logchars` (
+  `LogID` int(8) NOT NULL,
+  `CharID` int(8) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`LogID`,`CharID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE logchars
+    ADD FOREIGN KEY
+    (logID)
+    REFERENCES logs (id);
+    
+ALTER TABLE logchars
+    ADD FOREIGN KEY
+    (charID)
+    REFERENCES chars (id);
+
 
 --
 -- Table structure for table `pages`

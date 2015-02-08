@@ -16,6 +16,7 @@ class Menu_model extends CI_Model {
 		
 		#static pages
 		array_push($menu, array("name" => "Characters", "slug" => "chars"));
+		array_push($menu, array("name" => "Sessions", "slug" => "logs"));
 
 		return $menu;
 	}

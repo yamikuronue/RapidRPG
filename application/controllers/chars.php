@@ -10,6 +10,7 @@ class Chars extends Base_Controller {
 	public function index()
 	{
 		$data['chars'] = $this->Char_model->get_chars();
+		$data['loggedin'] = !empty($this->session->userdata('userID'));
 		
 		$this->load->view('templates/header', $this->headerData);
 		$this->load->view('chars/index', $data);
