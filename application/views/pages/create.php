@@ -15,7 +15,7 @@
 	<label for="content">Content:</label>
 	<textarea name="content" rows="10" cols="80"><?php echo set_value('content'); ?></textarea>
 
-	<input type="submit" name="submit" value="Create character" />
+	<input type="submit" name="submit" value="Create page" />
 </form>
 <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 <script>CKEDITOR.replace( 'content' );</script>
