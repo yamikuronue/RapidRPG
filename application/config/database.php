@@ -65,5 +65,23 @@ $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
 
+//Test environment
+$db['test']['hostname'] = 'sqlite:'.APPPATH.'data/test_database.sqlite';;
+$db['test']['username'] = '';
+$db['test']['password'] = '';
+$db['test']['database'] = '';
+$db['test']['dbdriver'] = 'pdo';
+$db['test']['dbprefix'] = '';
+$db['test']['pconnect'] = TRUE;
+$db['test']['db_debug'] = TRUE;
+$db['test']['cache_on'] = FALSE;
+$db['test']['cachedir'] = '';
+$db['test']['char_set'] = 'utf8';
+$db['test']['dbcollat'] = 'utf8_general_ci';
+$db['test']['swap_pre'] = '';
+$db['test']['autoinit'] = TRUE;
+$db['test']['stricton'] = FALSE;
+
+
 /* End of file database.php */
 /* Location: ./application/config/database.php */
