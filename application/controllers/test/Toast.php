@@ -1,13 +1,13 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Toast
- * 
+ *
  * JUnit-style unit testing in CodeIgniter. Requires PHP 5 (AFAIK). Subclass
  * this class to create your own tests. See the README file or go to
  * http://jensroland.com/projects/toast/ for usage and examples.
- * 
+ *
  * RESERVED TEST FUNCTION NAMES: test_index, test_show_results, test__[*]
- * 
+ *
  * @package			CodeIgniter
  * @subpackage	Controllers
  * @category		Unit Testing
@@ -15,15 +15,14 @@
  * @based on		Assert functions by user 'redguy' from the CI forums
  * @license			Creative Commons Attribution 3.0 (cc) 2009 Jens Roland
  * @author			Jens Roland (mail@jensroland.com)
- * 
+ *
  */
 
 
-abstract class Toast extends Controller
+abstract class Toast extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
-	// TODO: autoset
-	var $test_dir = '/test/';
+	var $test_dir;
 
 	var $modelname;
 	var $modelname_short;
@@ -31,13 +30,23 @@ abstract class Toast extends Controller
 	var $messages;
 	var $asserts;
 
-	function Toast($name)
+	function __construct($name)
 	{
-		parent::Controller();
+		parent::__construct();
 		$this->load->library('unit_test');
 		$this->modelname = $name;
 		$this->modelname_short = basename($name, '.php');
 		$this->messages = array();
+
+		// autoset test_dir
+		$reflection = new ReflectionClass(get_called_class());
+		$dir = $reflection->getFileName();
+		$dir = substr($dir, strpos($dir, "controllers")+12);
+		$dir = explode(DIRECTORY_SEPARATOR, $dir);
+		array_pop($dir);
+		$this->test_dir = '/' . implode('/', $dir) . '/';
+		// Set custom error handler
+		set_error_handler(array($this, "_error_function"));
 	}
 
 	function index()
@@ -129,14 +138,14 @@ abstract class Toast extends Controller
 
 	/**
 	 * Remap function (CI magic function)
-	 * 
+	 *
 	 * Reroutes any request that matches a test function in the subclass
 	 * to the _show() function.
-	 * 
+	 *
 	 * This makes it possible to request /my_test_class/my_test_function
 	 * to test just that single function, and /my_test_class to test all the
 	 * functions in the class.
-	 * 
+	 *
 	 */
 	function _remap($method)
 	{
@@ -172,7 +181,7 @@ abstract class Toast extends Controller
 		}
 		return FALSE;
 	}
-	
+
 	function _assert_true($assertion) {
 		if($assertion) {
 			return TRUE;
@@ -181,7 +190,7 @@ abstract class Toast extends Controller
 			return FALSE;
 		}
 	}
-	
+
 	function _assert_false($assertion) {
 		if($assertion) {
 			$this->asserts = FALSE;
@@ -190,7 +199,7 @@ abstract class Toast extends Controller
 			return TRUE;
 		}
 	}
-	
+
 	function _assert_true_strict($assertion) {
 		if($assertion === TRUE) {
 			return TRUE;
@@ -199,7 +208,7 @@ abstract class Toast extends Controller
 			return FALSE;
 		}
 	}
-	
+
 	function _assert_false_strict($assertion) {
 		if($assertion === FALSE) {
 			return TRUE;
@@ -208,7 +217,7 @@ abstract class Toast extends Controller
 			return FALSE;
 		}
 	}
-	
+
 	function _assert_equals($base, $check) {
 		if($base == $check) {
 			return TRUE;
@@ -217,7 +226,7 @@ abstract class Toast extends Controller
 			return FALSE;
 		}
 	}
-	
+
 	function _assert_not_equals($base, $check) {
 		if($base != $check) {
 			return TRUE;
@@ -253,7 +262,7 @@ abstract class Toast extends Controller
 			return FALSE;
 		}
 	}
-	
+
 	function _assert_not_empty($assertion) {
 		if(!empty($assertion)) {
 			return TRUE;
@@ -263,8 +272,19 @@ abstract class Toast extends Controller
 		}
 	}
 	
+	function _error_function($level, $message, $file, $line, $context)
+	{
+		if($level == E_NOTICE || $level == E_RECOVERABLE_ERROR){
+			$this->messages[] = "
+			Message: $message<br/>
+			Filename: $file<br/>
+			Line Number: $line";
+			$this->_fail();
+		}
+	}
+
 
 }
 
 // End of file Toast.php */
-// Location: ./system/application/controllers/test/Toast.php */ 
+// Location: ./system/application/controllers/test/Toast.php */

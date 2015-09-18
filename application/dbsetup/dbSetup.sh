@@ -1,7 +1,11 @@
-#TODO: Username and password. For now, the hardcoded scotchbox values work
-cd /var/www/public/application/dbsetup
+#USAGE
+# First parameter is username
+# Second parameter is password
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd DIR
 echo "Creating database users"
-mysql --user=root --password=root < dbUserCreate.sql
+mysql --user=$1 --password=$2 < dbUserCreate.sql
 echo "Creating database"
 mysql --user=rapidrpg --password=rapidrpg < dbCreate.sql
 echo "Adding sample data"

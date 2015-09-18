@@ -17,6 +17,6 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/var/www/public", :mount_options => ["dmode=777", "fmode=666"]
   
   #TODO: The following commands should move to the install script
-  config.vm.provision "shell", path: "application/dbsetup/dbSetup.sh"
+  config.vm.provision "shell", path: "application/dbsetup/dbSetup.sh root root"
 
 end

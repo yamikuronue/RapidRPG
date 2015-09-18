@@ -2,9 +2,9 @@
 
 /**
  * Toast_all
- * 
+ *
  * Runs all tests in the /app/controllers/test/ folder.
- * 
+ *
  * NOTE: This class *REQUIRES* CURL!
  *
  * @package			CodeIgniter
@@ -12,35 +12,38 @@
  * @category		Unit Testing
  * @license			Creative Commons Attribution 3.0 (cc) 2009 Jens Roland
  * @author			Jens Roland (mail@jensroland.com)
- * 
+ *
  */
 
 
-class Toast_all extends Controller
+class Toast_all extends CI_Controller
 {
 	// The folder INSIDE /controllers/ where the test classes are located
-	// TODO: autoset
-	var $test_dir = '/test/';
+	var $test_dir;
 
 	// Files to skip (ie. non-test classes) inside the test dir
 	var $skip = array(
-		'Toast.php',
-		'Toast_all.php'
+		'toast.php',
+		'toast_all.php'
 	);
 
 	// CURL multithreaded mode (only set to true if you are sure your tests
 	// don't conflict when run in parallel)
 	var $multithreaded = false;
 
-	function Toast_all()
+	function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
+
+		// autoset test_dir
+		$dir = explode(DIRECTORY_SEPARATOR, dirname(__FILE__));
+		$this->test_dir = '/' . array_pop($dir) . '/';
 	}
 
 	function index()
 	{
 		$output = '';
-		
+
 		// Fetch all test classes
 		$test_files = $this->_get_test_files();
 
@@ -67,37 +70,43 @@ class Toast_all extends Controller
 
 		// Load footer
 		$output .= $this->load->view('test/footer', NULL, TRUE);
-		
+
 		// Send to display
 		echo $output;
 	}
 
 	/**
 	 * Get a list of all the test files in the test dir
-	 * 
+	 *
 	 * @return array of filenames (without '.php' extensions)
 	 */
 	function _get_test_files()
 	{
-		$files = array();
-
-		$handle=opendir(APPPATH . '/controllers' . $this->test_dir);
-		while (false!==($file = readdir($handle)))
-		{
-			// Skip hidden/system files and the files in the skip[] array
-			if ( ! in_array($file, $this->skip) && ! (substr($file, 0, 1) == '.'))
+		function readFilesFromDirectory($base, $path, $skip){
+			$files = array();
+			$handle = opendir($base.$path);
+			while (false!==($file = readdir($handle)))
 			{
-				// Remove the '.php' part of the file name
-				$files[] = substr($file, 0, strlen($file) - 4);
+				// Skip hidden/system files and the files in the skip[] array
+				if ( ! in_array($file, $skip) && ! (substr($file, 0, 1) == '.'))
+				{
+					if(is_dir($base.$path.$file)){
+						$files = array_merge($files, readFilesFromDirectory($base, $path.$file."/", $skip));
+					}else{
+						$files[] = $path.substr($file, 0, strlen($file) - 4);
+					}
+				}
 			}
-		}
-		closedir($handle);
+			closedir($handle);
+			return $files;
+		};
+		$files = readFilesFromDirectory(APPPATH . '/controllers' . $this->test_dir, '', $this->skip);
 		return $files;
 	}
 
 	/**
 	 * Fetch a number of URLs as a string
-	 * 
+	 *
 	 * @return string containing the (concatenated) HTML documents
 	 * @param array $urls array of fully qualified URLs
 	 */
@@ -117,7 +126,7 @@ class Toast_all extends Controller
 
 	/**
 	 * Fetch a number of URLs as a string (multithreaded)
-	 * 
+	 *
 	 * @return string containing the (concatenated) HTML documents
 	 * @param array $urls array of fully qualified URLs
 	 */
@@ -155,4 +164,4 @@ class Toast_all extends Controller
 }
 
 // End of file Toast_all.php */
-// Location: ./system/application/controllers/test/Toast_all.php */ 
+// Location: ./system/application/controllers/test/Toast_all.php */

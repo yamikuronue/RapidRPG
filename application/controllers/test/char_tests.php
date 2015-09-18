@@ -5,7 +5,7 @@ class Char_tests extends Toast
 {
 	function Char_tests()
 	{
-		parent::Toast(__FILE__);
+		parent::__construct(__FILE__);
 		
 		// Load any models, libraries etc. you need here
 		$this->load->model('Char_model');
@@ -30,42 +30,33 @@ class Char_tests extends Toast
 
 	/* TESTS BELOW */
 
-	function test_simple_addition()
+	function test_get_one_char()
 	{
-		$var = 2 + 2;
-		$this->_assert_equals($var, 4);
+		$char = $this->Char_model->get_chars(2); //Sample data
+		
+		$this->_assert_equals($char['id'], "2");
+		$this->_assert_equals($char['fName'], "Ariana");
+		$this->_assert_equals($char['lName'], "Grande");
+		$this->_assert_equals($char['ownerName'], "user"); //Should join on userID to get user name
 	}
-
-
-	function test_that_fails()
+	
+	function test_get_bad_char()
 	{
-		$a = true;
-		$b = $a;
-
-		// You can test multiple assertions / variables in one function:
-
-		$this->_assert_true($a); // true
-		$this->_assert_false($b); // false
-		$this->_assert_equals($a, $b); // true
-
-		// Since one of the assertions failed, this test case will fail
+		$char = $this->Char_model->get_chars(69); //Nonexistant char
+		
+		$this->_assert_empty($char); //Nothing returned.
 	}
-
-
-	function test_or_operator()
+	
+	function test_get_all_chars()
 	{
-		$a = true;
-		$b = false;
-		$var = $a || $b;
-
-		$this->_assert_true($var);
-
-		// If you need to, you can pass a message /
-		// description to the unit test results page:
-
-		$this->message = '$a || $b';
+		$chars = $this->Char_model->get_chars(); //Sample data
+		$char = $chars[1];
+		
+		$this->_assert_equals($char['id'], "2");
+		$this->_assert_equals($char['fName'], "Ariana");
+		$this->_assert_equals($char['lName'], "Grande");
+		$this->_assert_equals($char['ownerName'], "user"); //Should join on userID to get user name
 	}
-
 }
 
 // End of file example_test.php */
