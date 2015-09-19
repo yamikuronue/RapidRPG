@@ -25,13 +25,17 @@ class Logs_model extends CI_Model {
 		$query = $this->db->where(array('id' => $id))->get('logs');
 		$log = $query->row_array();
 		
-		$query = $this->db->select("filename")->where(array('id' => $id))->get('logs');
-		$row = $query->row();
-		$filename = $row->filename;
+		if ($log) {
+			$query = $this->db->select("filename")->where(array('id' => $id))->get('logs');
+			$row = $query->row();
 		
-		$contents = file_get_contents("application/data/logs/" . $filename);
-		$contents = str_replace("\n", "<br/>", htmlspecialchars($contents));
-		$log['text'] = $contents;
+	
+			$filename = $row->filename;
+		
+			$contents = file_get_contents("application/data/logs/" . $filename);
+			$contents = str_replace("\n", "<br/>", htmlspecialchars($contents));
+			$log['text'] = $contents;
+		}
 		
 		return $log;
 	}
