@@ -32,6 +32,10 @@ $template = "default"
 				echo '<li><a href="'.site_url("logout").'">Logout</a></li>';
 			} else {
 				echo '<li><a href="'.site_url("login").'">Login</a></li>';
+			}
+			
+			if ($isAdmin) { 
+				echo '<li><a href="'.site_url("admin").'">Admin</a></li>';
 			}?>
 		   </ul>
 

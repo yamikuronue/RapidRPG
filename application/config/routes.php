@@ -51,6 +51,8 @@ $route['login/validate'] = 'login/validate';
 
 $route['test/(:any:)'] = 'test';
 
+$route['admin'] = 'admin';
+
 $route['pages/create'] = 'pages/create';
 $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1';
